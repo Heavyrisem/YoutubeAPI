@@ -1,0 +1,29 @@
+{
+  "name": "youtube-api",
+  "version": "1.0.0",
+  "description": "유튜브 영상을 검색하고(5개씩), 영상의 정보를 가져오는 라이브러리 입니다.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Heavyrisem/YoutubeAPI.git"
+  },
+  "keywords": [
+    "유튜브",
+    "API",
+    "검색",
+    "youtube",
+    "info"
+  ],
+  "author": "Heavyrisem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Heavyrisem/YoutubeAPI/issues"
+  },
+  "homepage": "https://github.com/Heavyrisem/YoutubeAPI#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
