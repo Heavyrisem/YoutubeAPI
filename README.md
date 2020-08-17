@@ -22,7 +22,7 @@ Youtube.GetInfo("xarC5jAiO7w", key).then(result => {    // 영상 한개의 정�
 });
 
 ID값 또는 URL
-Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAiO7w&start_radio=1", key).then(result => {
+Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAiO7w&start_radio=1", key).then(result => {   // Youtube 재생목록의 영상들 (최대 10개)
     console.log(result);
 });
 ```
