@@ -42,7 +42,7 @@ Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAi
         }
     }
 
-    값이 여러개인 경우에는 배열에 담겨 리턴됩니다.
+    모든 결과값은 배열에 담겨 리턴됩니다.
 ```
 
 ## 이외의 오류

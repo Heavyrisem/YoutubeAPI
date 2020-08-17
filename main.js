@@ -34,8 +34,8 @@ class YoutubeAPI {
                 searchData.items.forEach((value, index) => {
 
                     this.GetInfo(value.id.videoId, APIKEY).then(videoInfo => {
-                        if (videoInfo.error) return resolve({error: videoInfo.error});
-                        result.push(videoInfo);
+                        if (videoInfo[0].error) return resolve({error: videoInfo[0].error});
+                        result.push(videoInfo[0]);
                         processedData += 1;
                         
                         if (processedData == searchData.items.length) return resolve(result);
@@ -94,7 +94,7 @@ class YoutubeAPI {
                     thumbnail: info.snippet.thumbnails.default
                 };
     
-                return resolve(result);
+                return resolve([result]);
             })
         });
     }
@@ -142,7 +142,7 @@ class YoutubeAPI {
 
                         if (processedData == resultNum) return resolve(result);
                     });
-                    
+
                 });
 
             });
