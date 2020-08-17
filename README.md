@@ -34,7 +34,7 @@ Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAi
         title: 'ODESZA - A Moment Apart', // 비디오 제목
         channel: 'ODESZA', // 업로더 채널이름
         description: '...', // 영상 설명
-        duration: '3M55S',  // 영상 길이
+        duration: '3m55s',  // 영상 길이
         thumbnail: {    // 영상 기본 썸네일
             url: 'https://i.ytimg.com/vi/xarC5jAiO7w/default.jpg',
             width: 120,

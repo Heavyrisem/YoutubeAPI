@@ -61,11 +61,15 @@ class YoutubeAPI {
                 },
                 uri: "https://www.googleapis.com/youtube/v3/videos"
             };
+
+            
+            if (id.indexOf('list') != -1) {
+                return this.GetListInfo(id, APIKEY).then(result => {return resolve(result)})
+            };
             
             const url_regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
             let URL = id.match(url_regex);
             if (URL != null) {
-                if (URL[0].includes('list')) return resolve({error: {message: 'List can`t resolve', reason: 'list_cannot_resolve'}});
                 infoOPT.qs.id = URL[7].trim();
             }
 
@@ -80,13 +84,13 @@ class YoutubeAPI {
                     contentDetails: info.items[0].contentDetails,
                     id: info.items[0].id
                 };
-    
+                
                 let result = {
                     id: info.id,
                     title: info.snippet.title,
                     channel: info.snippet.channelTitle,
                     description: info.snippet.description,
-                    duration: info.contentDetails.duration.substring(2),
+                    duration: info.contentDetails.duration.substring(2).toLowerCase(),
                     thumbnail: info.snippet.thumbnails.default
                 };
     
@@ -100,7 +104,7 @@ class YoutubeAPI {
 
             let listOPT = {
                 qs: {
-                    part: "contentDetails",
+                    part: "snippet, contentDetails",
                     playlistId: URL,
                     maxResults: 10,
                     key: APIKEY
@@ -129,14 +133,16 @@ class YoutubeAPI {
                 const resultNum = listData.pageInfo.resultsPerPage;
                 let processedData = 0;
                 listData.items.forEach((value, index) => {
+                    
                     this.GetInfo(value.contentDetails.videoId, APIKEY).then(videoinfo => {
                         if (videoinfo.error) return resolve(videoinfo);
 
-                        result.push(videoinfo);
+                        result[value.snippet.position] = videoinfo;
                         processedData += 1;
 
                         if (processedData == resultNum) return resolve(result);
                     });
+                    
                 });
 
             });
