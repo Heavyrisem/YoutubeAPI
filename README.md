@@ -15,7 +15,14 @@ Youtube.SearchOnYoutube("A moment Apart", key).then(result => { // 검색(5개)
     
 });
 
+
+ID값 또는 URL
 Youtube.GetInfo("xarC5jAiO7w", key).then(result => {    // 영상 한개의 정보만
+    console.log(result);
+});
+
+ID값 또는 URL
+Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAiO7w&start_radio=1", key).then(result => {
     console.log(result);
 });
 ```
@@ -23,17 +30,19 @@ Youtube.GetInfo("xarC5jAiO7w", key).then(result => {    // 영상 한개의 정�
 ## 결과값
 ```
     {
-        id: 'xarC5jAiO7w', // Video ID
-        title: 'ODESZA - A Moment Apart', // Video Title
-        channel: 'ODESZA', // Uploader ChannelName
-        description: '...', // Video Description
-        duration: '3M55S',  // Video Duration
-        thumbnail: {    // Video Default Thumbnail
+        id: 'xarC5jAiO7w', // 비디오 ID
+        title: 'ODESZA - A Moment Apart', // 비디오 제목
+        channel: 'ODESZA', // 업로더 채널이름
+        description: '...', // 영상 설명
+        duration: '3M55S',  // 영상 길이
+        thumbnail: {    // 영상 기본 썸네일
             url: 'https://i.ytimg.com/vi/xarC5jAiO7w/default.jpg',
             width: 120,
             height: 90
         }
     }
+
+    값이 여러개인 경우에는 배열에 담겨 리턴됩니다.
 ```
 
 ## 이외의 오류

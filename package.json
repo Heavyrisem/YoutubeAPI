@@ -1,6 +1,6 @@
 {
   "name": "ytsearch_api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "유튜브 영상을 검색하고(5개씩), 영상의 정보를 가져오는 라이브러리 입니다.",
   "main": "main.js",
   "scripts": {

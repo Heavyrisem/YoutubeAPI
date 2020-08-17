@@ -73,6 +73,7 @@ class YoutubeAPI {
                 if (err) return resolve({error: err});
     
                 let info = JSON.parse(body);
+                if (info.items == '') return resolve([]);
                 if (info.error) return resolve({error: info.error.errors[0]});
                 info = {
                     snippet: info.items[0].snippet,
@@ -86,11 +87,59 @@ class YoutubeAPI {
                     channel: info.snippet.channelTitle,
                     description: info.snippet.description,
                     duration: info.contentDetails.duration.substring(2),
-                    thumbnail: info.snippet.thumbnails.default,
+                    thumbnail: info.snippet.thumbnails.default
                 };
     
                 return resolve(result);
             })
+        });
+    }
+
+    GetListInfo(URL, APIKEY) {
+        return new Promise((resolve, reject) => {
+
+            let listOPT = {
+                qs: {
+                    part: "contentDetails",
+                    playlistId: URL,
+                    maxResults: 10,
+                    key: APIKEY
+                },
+                uri: "https://www.googleapis.com/youtube/v3/playlistItems"
+            }
+
+            const url_regex = /^.*(youtu.be\/|list=)([^#\&\?]*).*/;
+            let URL_ = URL.match(url_regex);
+            if (URL_ != null) {
+                if (URL_[2] == undefined) return resolve({error: {message: 'list id is empty!', reason: 'list_id_empty'}});
+                listOPT.qs.playlistId = URL_[2];
+            }
+
+
+            request.get(listOPT, (err, res, body) => {
+
+                if (err) return resolve({error: err});
+
+                let listData = JSON.parse(body);
+                if (listData.error) return resolve({error: listData.error.errors});
+                if (listData.items == '') return resolve([]);
+
+                let result = [];
+
+                const resultNum = listData.pageInfo.resultsPerPage;
+                let processedData = 0;
+                listData.items.forEach((value, index) => {
+                    this.GetInfo(value.contentDetails.videoId, APIKEY).then(videoinfo => {
+                        if (videoinfo.error) return resolve(videoinfo);
+
+                        result.push(videoinfo);
+                        processedData += 1;
+
+                        if (processedData == resultNum) return resolve(result);
+                    });
+                });
+
+            });
         });
     }
 }
