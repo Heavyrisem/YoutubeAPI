@@ -51,7 +51,7 @@ class YoutubeAPI {
     
     GetInfo(id, APIKEY) {
         return new Promise((resolve, reject) => {
-    
+
             let infoOPT = {
                 qs: {
                     part: "snippet, contentDetails",
@@ -61,7 +61,14 @@ class YoutubeAPI {
                 },
                 uri: "https://www.googleapis.com/youtube/v3/videos"
             };
-    
+            
+            const url_regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+            let URL = id.match(url_regex);
+            if (URL != null) {
+                if (URL[0].includes('list')) return resolve({error: {message: 'List can`t resolve', reason: 'list_cannot_resolve'}});
+                infoOPT.qs.id = URL[7].trim();
+            }
+
             request.get(infoOPT, (err, res, body) => {
                 if (err) return resolve({error: err});
     
