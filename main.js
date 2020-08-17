@@ -64,7 +64,7 @@ class YoutubeAPI {
 
             
             if (id.indexOf('list') != -1) {
-                return this.GetListInfo(id, APIKEY).then(result => {return resolve(result)})
+                return this.GetListInfo(id, APIKEY).then(result => {return resolve(result)});
             };
             
             const url_regex = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
@@ -93,9 +93,10 @@ class YoutubeAPI {
                     duration: info.contentDetails.duration.substring(2).toLowerCase(),
                     thumbnail: info.snippet.thumbnails.default
                 };
-    
-                return resolve([result]);
-            })
+                
+
+                return  resolve([result]);
+            });
         });
     }
 
@@ -137,10 +138,12 @@ class YoutubeAPI {
                     this.GetInfo(value.contentDetails.videoId, APIKEY).then(videoinfo => {
                         if (videoinfo.error) return resolve(videoinfo);
 
-                        result[value.snippet.position] = videoinfo;
+                        result[value.snippet.position] = videoinfo[0];
                         processedData += 1;
 
-                        if (processedData == resultNum) return resolve(result);
+                        if (processedData == resultNum) {
+                            return resolve(result);
+                        }
                     });
 
                 });
