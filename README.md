@@ -6,7 +6,7 @@ Youtube data api v3 기반으로
 
 ## 사용법
 ```
-const Youtube = require('youtubeSearch');
+const Youtube = require('ytsearch_api');
 
 const key = "Y O U R  A P I  K E Y";
 
