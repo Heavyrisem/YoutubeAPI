@@ -131,7 +131,7 @@ class YoutubeAPI {
 
                 let result = [];
 
-                const resultNum = listData.pageInfo.resultsPerPage;
+                let resultNum = (listData.pageInfo.totalResults > listData.pageInfo.resultsPerPage) ? listData.pageInfo.resultsPerPage : listData.pageInfo.totalResults;
                 let processedData = 0;
                 listData.items.forEach((value, index) => {
                     
