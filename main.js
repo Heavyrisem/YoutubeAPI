@@ -126,7 +126,7 @@ class YoutubeAPI {
                 if (err) return resolve({error: err});
 
                 let listData = JSON.parse(body);
-                if (listData.error) return resolve({error: listData.error.errors});
+                if (listData.error) return resolve({error: listData.error.errors[0]});
                 if (listData.items == '') return resolve([]);
 
                 let result = [];
