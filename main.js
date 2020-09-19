@@ -4,6 +4,67 @@ const request = require('request');
 
 class YoutubeAPI {
 
+    SearchAllYoutube(keyword, APIKEY) {
+        return new Promise((resolve, reject) => {
+            
+             var searchOPT = {
+                 qs: {
+                     q: keyword,
+                     part: "snippet",
+                     key: APIKEY,
+                     type: "video channel",
+                     maxResults: 5
+                 },
+                 uri: "https://www.googleapis.com/youtube/v3/search"
+             }
+            
+            
+            request.get(searchOPT, (err, res, body) => {
+                if (err) return resolve({error: err});
+            
+            
+                let result = [];
+            
+                let searchData = JSON.parse(body);
+                if (searchData.error) return resolve({error: searchData.error.errors[0]});
+                if (searchData.items.length == 0) return resolve(result);
+
+                let processedData = 0;
+                
+                searchData.items.forEach((value, index) => {
+
+                    if (value.id.kind == 'youtube#channel') {
+                        result.push({
+                            type: 'channel',
+                            data: {
+                                id: value.id.channelId,
+                                title: value.snippet.title,
+                                channelDescription: value.snippet.description,
+                                thumbnail: value.snippet.thumbnails,
+                                publishTime: value.snippet.publishTime
+                            }
+                        });
+                        processedData += 1;
+                        if (processedData == searchData.items.length) return resolve(result);
+                    } else {
+                        this.GetInfo(value.id.videoId, APIKEY).then(videoInfo => {
+                            if (videoInfo[0].error) return resolve({error: videoInfo[0].error});
+                            result.push({
+                                type: 'video',
+                                data: videoInfo[0]
+                            });
+                            processedData += 1;
+                            if (processedData == searchData.items.length) return resolve(result);
+                        });
+                    }
+
+                });
+
+            });
+            
+        });
+    }
+
     SearchOnYoutube(keyword, APIKEY) {
         return new Promise((resolve, reject) => {
             
@@ -91,7 +152,7 @@ class YoutubeAPI {
                     channel: info.snippet.channelTitle,
                     description: info.snippet.description,
                     duration: info.contentDetails.duration.substring(2).toLowerCase(),
-                    thumbnail: info.snippet.thumbnails.default
+                    thumbnail: info.snippet.thumbnails
                 };
                 
 

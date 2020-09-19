@@ -10,9 +10,13 @@ const Youtube = require('ytsearch_api');
 
 const key = "Y O U R  A P I  K E Y";
 
-Youtube.SearchOnYoutube("A moment Apart", key).then(result => { // 검색(5개)
+Youtube.SearchOnYoutube("A moment Apart", key).then(result => { // 영상만 검색(5개)
     console.log(result);
     
+});
+
+Youtube.SearchAllYoutube("오킹", key).then(result => { // 영상,채널 검색(5개)
+    console.log(result);
 });
 
 
@@ -29,16 +33,103 @@ Youtube.GetListInfo("https://www.youtube.com/watch?v=xarC5jAiO7w&list=RDxarC5jAi
 
 ## 결과값
 ```
+    SearchAllYoutube 리턴값
+    {
+        type: 'channel', // 결과값의 종류
+        data: {
+            id: 'UCom6YhUY62jM52nIMjf5_dw', // 채널 ID
+            title: '오킹TV', // 채널 이름
+            description: '...', // 채널 설명
+            thumbnail: {    // 채널 프로필 이미지
+
+                default: {
+                    url: 'https://yt3.ggpht.com/-oH6-I9n6pBs/AAAAAAAAAAI/AAAAAAAAAAA/crQiKX0sCzg/s88-c-k-no-mo-rj-c0xffffff/photo.jpg'
+                },
+                medium: {
+                    url: 'https://yt3.ggpht.com/-oH6-I9n6pBs/AAAAAAAAAAI/AAAAAAAAAAA/crQiKX0sCzg/s240-c-k-no-mo-rj-c0xffffff/photo.jpg'
+                },
+                high: {
+                    url: 'https://yt3.ggpht.com/-oH6-I9n6pBs/AAAAAAAAAAI/AAAAAAAAAAA/crQiKX0sCzg/s800-c-k-no-mo-rj-c0xffffff/photo.jpg'
+                }
+
+            }
+        }
+    },
+    {
+        type: 'video',
+        data: {
+            id: 'xarC5jAiO7w', // 비디오 ID
+            title: 'ODESZA - A Moment Apart', // 비디오 제목
+            channel: 'ODESZA', // 업로더 채널이름
+            description: '...', // 영상 설명
+            duration: '3m55s',  // 영상 길이
+            thumbnail: {    // 영상 썸네일
+            
+                default: {
+                    url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/default.jpg',
+                    width: 120,
+                    height: 90
+                },
+                medium: {
+                    url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/mqdefault.jpg',
+                    width: 320,
+                    height: 180
+                },
+                high: {
+                    url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/hqdefault.jpg',
+                    width: 480,
+                    height: 360
+                },
+                standard: {
+                    url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/sddefault.jpg',
+                    width: 640,
+                    height: 480
+                },
+                maxres: {
+                    url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/maxresdefault.jpg',
+                    width: 1280,
+                    height: 720
+                }
+
+            }
+        }
+    }
+
+    SearchOnYoutube 리턴값
     {
         id: 'xarC5jAiO7w', // 비디오 ID
         title: 'ODESZA - A Moment Apart', // 비디오 제목
         channel: 'ODESZA', // 업로더 채널이름
         description: '...', // 영상 설명
         duration: '3m55s',  // 영상 길이
-        thumbnail: {    // 영상 기본 썸네일
-            url: 'https://i.ytimg.com/vi/xarC5jAiO7w/default.jpg',
-            width: 120,
-            height: 90
+        thumbnail: {    // 영상 썸네일
+        
+            default: {
+                url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/default.jpg',
+                width: 120,
+                height: 90
+            },
+            medium: {
+                url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/mqdefault.jpg',
+                width: 320,
+                height: 180
+            },
+            high: {
+                url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/hqdefault.jpg',
+                width: 480,
+                height: 360
+            },
+            standard: {
+                url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/sddefault.jpg',
+                width: 640,
+                height: 480
+            },
+            maxres: {
+                url: 'https://i.ytimg.com/vi/5LgiiYaa96Q/maxresdefault.jpg',
+                width: 1280,
+                height: 720
+            }
+
         }
     }
 
